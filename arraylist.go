@@ -48,7 +48,11 @@ func (list *ArrayList) RemoveOnIndex(index int) error {
 }
 
 func (list *ArrayList) Get(index int) (int, error) {
-	return 0, errors.New("index not accessible")
+	if index >= 0 && index <= list.inserted {
+		return list.values[index], nil
+	} else {
+		return index, errors.New("index not accessible")
+	}
 }
 
 func (list *ArrayList) Update(value int, index int) error {
@@ -56,5 +60,5 @@ func (list *ArrayList) Update(value int, index int) error {
 }
 
 func (list *ArrayList) Size() int {
-	return 0
+	return list.inserted
 }
