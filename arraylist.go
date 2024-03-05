@@ -18,7 +18,7 @@ func (list *ArrayList) AddOnIndex(value int, index int) error {
 	if index >= 0 && index <= list.inserted {
 		if list.inserted >= len(list.values) {
 		}
-		for i := list.inserted; i < index; i-- {
+		for i := list.inserted; i > index; i-- {
 			list.values[i] = list.values[i-1]
 		}
 		list.values[index] = value
