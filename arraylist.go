@@ -52,7 +52,12 @@ func (list *ArrayList) Get(index int) (int, error) {
 }
 
 func (list *ArrayList) Update(value int, index int) error {
-	return errors.New("index not accessible")
+	if index >= 0 && index <= list.inserted {
+		list.values[index] = value
+		return nil
+	} else {
+		return errors.New("index not accessible")
+	}
 }
 
 func (list *ArrayList) Size() int {
