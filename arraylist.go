@@ -25,24 +25,34 @@ func (list *ArrayList) AddOnIndex(value int, index int) error {
 		list.inserted++
 		return nil
 	} else {
-		return errors.New("index not acessible")
+		return errors.New("index not accessible")
 	}
 }
 
 func (list *ArrayList) RemoveLast() {
-
+	if list.inserted > 0 {
+		list.inserted--
+	}
 }
 
 func (list *ArrayList) RemoveOnIndex(index int) error {
-	return errors.New("index not acessible")
+	if index >= 0 && index <= list.inserted {
+		for i := index; i < (list.inserted - 1); i++ {
+			list.values[i] = list.values[i+1]
+		}
+		list.inserted--
+		return nil
+	} else {
+		return errors.New("index not accessible")
+	}
 }
 
 func (list *ArrayList) Get(index int) (int, error) {
-	return 0, errors.New("index not acessible")
+	return 0, errors.New("index not accessible")
 }
 
 func (list *ArrayList) Update(value int, index int) error {
-	return errors.New("index not acessible")
+	return errors.New("index not accessible")
 }
 
 func (list *ArrayList) Size() int {
