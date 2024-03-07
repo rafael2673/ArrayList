@@ -7,10 +7,14 @@ type ArrayList struct {
 	inserted int // Esse daqui é a quantidade de valores da lista
 }
 
+func (list *ArrayList) Init(len int) {
+	list.values = make([]int, len)
+}
+
 func (list *ArrayList) doubleCapacity() {
 
 	doubleArray := make([]int, len(list.values)*2)
-
+	//lint:ignore S1001 because i want
 	for i := 0; i < len(list.values); i++ {
 		doubleArray[i] = list.values[i]
 	}
