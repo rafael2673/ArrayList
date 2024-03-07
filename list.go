@@ -1,6 +1,6 @@
-package main
+package list
 
-type List interface {
+type IList interface {
 	Add(value int)
 	AddOnIndex(value int, index int) error
 	RemoveLast()
