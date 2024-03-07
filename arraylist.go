@@ -7,8 +7,14 @@ type ArrayList struct {
 	inserted int // Esse daqui é a quantidade de valores da lista
 }
 
-func (list *ArrayList) Init(len int) {
-	list.values = make([]int, len)
+func (list *ArrayList) Init(len int) error {
+	if len > 0 {
+		list.values = make([]int, len)
+		return nil
+	} else {
+		return errors.New("size must be greater than 0")
+	}
+
 }
 
 func (list *ArrayList) doubleCapacity() {
