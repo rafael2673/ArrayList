@@ -1,3 +1,3 @@
-module main
+module list
 
 go 1.22.0
