@@ -7,8 +7,31 @@ type ArrayList struct {
 	inserted int // Esse daqui é a quantidade de valores da lista
 }
 
+func (list *ArrayList) Init(len int) error {
+	if len > 0 {
+		list.values = make([]int, len)
+		return nil
+	} else {
+		return errors.New("size must be greater than 0")
+	}
+
+}
+
+func (list *ArrayList) doubleCapacity() {
+
+	doubleArray := make([]int, len(list.values)*2)
+	//lint:ignore S1001 because i want
+	for i := 0; i < len(list.values); i++ {
+		doubleArray[i] = list.values[i]
+	}
+
+	list.values = doubleArray
+
+}
+
 func (list *ArrayList) Add(value int) {
 	if list.inserted >= len(list.values) {
+		list.doubleCapacity()
 	}
 	list.values[list.inserted] = value
 	list.inserted++
@@ -17,6 +40,7 @@ func (list *ArrayList) Add(value int) {
 func (list *ArrayList) AddOnIndex(value int, index int) error {
 	if index >= 0 && index <= list.inserted {
 		if list.inserted >= len(list.values) {
+			list.doubleCapacity()
 		}
 		for i := list.inserted; i > index; i-- {
 			list.values[i] = list.values[i-1]
