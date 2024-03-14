@@ -1,6 +1,8 @@
 package list
 
-import "errors"
+import (
+	"errors"
+)
 
 type Node struct {
 	val  int
@@ -69,6 +71,18 @@ func (list *LinkedList) RemoveLast() {
 
 func (list *LinkedList) RemoveOnIndex(index int) error {
 	if index >= 0 && index <= list.size {
+		if index == 0 {
+			list.head = list.head.next
+		} else {
+			current := list.head
+
+			for i := 1; i < index; i++ {
+				current = current.next
+			}
+
+			current.next = current.next.next
+		}
+		list.size--
 		return nil
 	} else {
 		return errors.New("index not accessible")
