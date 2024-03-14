@@ -37,7 +37,7 @@ func (list *LinkedList) AddOnIndex(value int, index int) error {
 			list.head = newNode
 		} else {
 			current := list.head
-			for i := 1; current.next != nil && i < index-1; i++ {
+			for i := 1; i < index; i++ {
 				current = current.next
 			}
 
@@ -51,7 +51,22 @@ func (list *LinkedList) AddOnIndex(value int, index int) error {
 	}
 }
 
-func (list *LinkedList) RemoveLast() {}
+func (list *LinkedList) RemoveLast() {
+	if list.head == nil {
+		return
+	} else if list.head.next == nil {
+		list.head = nil
+	} else {
+		current := list.head
+		for current.next.next != nil {
+			current = current.next
+		}
+		current.next = nil
+	}
+	list.size--
+
+}
+
 func (list *LinkedList) RemoveOnIndex(index int) error {
 	if index >= 0 && index <= list.size {
 		return nil
