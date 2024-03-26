@@ -14,6 +14,10 @@ type LinkedList struct {
 	size int
 }
 
+func NewLinkedList() *LinkedList {
+	return &LinkedList{}
+}
+
 func (list *LinkedList) Add(value int) {
 	newNode := &Node{val: value, next: nil}
 
@@ -88,15 +92,26 @@ func (list *LinkedList) RemoveOnIndex(index int) error {
 		return errors.New("index not accessible")
 	}
 }
+
 func (list *LinkedList) Get(index int) (int, error) {
 	if index >= 0 && index <= list.size {
-		return index, nil
+		current := list.head
+		for i := 0; i < index; i++ {
+			current = current.next
+		}
+		return current.val, nil
 	} else {
 		return -1, errors.New("index not accessible")
 	}
 }
+
 func (list *LinkedList) Update(value int, index int) error {
 	if index >= 0 && index <= list.size {
+		current := list.head
+		for i := 0; i < index; i++ {
+			current = current.next
+		}
+		current.val = value
 		return nil
 	} else {
 		return errors.New("index not accessible")
