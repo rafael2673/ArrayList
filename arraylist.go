@@ -1,6 +1,9 @@
 package list
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type ArrayList struct {
 	values   []int
@@ -90,4 +93,20 @@ func (list *ArrayList) Update(value int, index int) error {
 
 func (list *ArrayList) Size() int {
 	return list.inserted
+}
+
+func (list *ArrayList) GetAll() {
+	fmt.Println("Size: ", list.Size())
+	for i := 0; i < list.inserted; i++ {
+		fmt.Println(list.Get(i))
+	}
+}
+
+func (list *ArrayList) Reverse() {
+	aux := 0
+	for i := 0; i < list.inserted/2; i++ {
+		aux = list.values[i]
+		list.values[i] = list.values[list.inserted-i-1]
+		list.values[list.inserted-i-1] = aux
+	}
 }
