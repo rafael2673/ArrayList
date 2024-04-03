@@ -92,7 +92,7 @@ func (list *DoubleLinkedList) RemoveOnIndex(index int) error {
 		} else if index == 0 {
 			list.head = list.head.next
 			list.head.prev = nil
-		} else if index == list.size {
+		} else if index == list.size-1 {
 			list.tail = list.tail.prev
 			list.tail.next = nil
 		} else {
@@ -102,8 +102,8 @@ func (list *DoubleLinkedList) RemoveOnIndex(index int) error {
 				current = current.next
 			}
 
-			current.next.prev = current.prev
 			current.prev.next = current.next
+			current.next.prev = current.prev
 		}
 
 		list.size--
@@ -113,17 +113,35 @@ func (list *DoubleLinkedList) RemoveOnIndex(index int) error {
 	}
 }
 
-// to do
 func (list *DoubleLinkedList) Get(index int) (int, error) {
-	return -1, nil
+	if list.size == 0 {
+		return -1, errors.New("list is empty")
+	}
+	if index <= list.size && index > -1 {
+		current := list.head
+		for i := 0; i < index; i++ {
+			current = current.next
+		}
+		return current.value, nil
+	}
+	return -1, errors.New("index is not accessible")
 }
 
-// to do
 func (list *DoubleLinkedList) Update(value int, index int) error {
+	if list.size == 0 {
+		return errors.New("list is empty")
+	}
+	if index <= list.size && index > -1 {
+		current := list.head
+		for i := 0; i < index; i++ {
+			current = current.next
+		}
+		current.value = value
+	}
+
 	return nil
 }
 
-// to do
 func (list *DoubleLinkedList) Size() int {
 	return list.size
 }

@@ -6,14 +6,15 @@ import (
 
 var size int
 
-// var lists [3]IList
-var lists [1]IList
+var lists [3]IList
+
+// var lists [1]IList
 
 func createLists(size int) {
 	arraylist := &ArrayList{}
 	(*arraylist).Init(size)
-	lists = [1]IList{&LinkedList{}}
-	//lists = [3]IList{arraylist, &LinkedList{}, &DoublyLinkedList{}}
+	//lists = [1]IList{&LinkedList{}}
+	lists = [3]IList{arraylist, &LinkedList{}, &DoubleLinkedList{}}
 }
 
 func deleteLists() {
