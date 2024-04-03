@@ -1,5 +1,9 @@
 package list
 
+import (
+	"errors"
+)
+
 type NodeDoubleLinked struct {
 	value int
 	prev  *NodeDoubleLinked
@@ -30,17 +34,83 @@ func (list *DoubleLinkedList) Add(value int) {
 	list.size++
 }
 
-// to do
 func (list *DoubleLinkedList) AddOnIndex(value int, index int) error {
-	return nil
+	if index <= list.size && index > -1 {
+		newNode := &NodeDoubleLinked{value: value, prev: nil, next: nil}
+		if list.head == nil {
+			list.head = newNode
+			list.tail = newNode
+		} else if index == 0 {
+			newNode.next = list.head
+			list.head.prev = newNode
+			list.head = newNode
+		} else if index == list.size {
+			newNode.prev = list.tail
+			list.tail.next = newNode
+			list.tail = newNode
+		} else {
+			current := list.head
+
+			for i := 0; i < index-1; i++ {
+				current = current.next
+			}
+
+			newNode.prev = current
+			newNode.next = current.next
+			current.next.prev = newNode
+			current.next = newNode
+		}
+		list.size++
+		return nil
+	} else {
+		return errors.New("index is not accessible")
+	}
 }
 
-// to do
-func (list *DoubleLinkedList) RemoveLast() {}
+func (list *DoubleLinkedList) RemoveLast() {
+	if list.tail == nil {
+		return
+	}
+	if list.head == list.tail {
+		list.head = nil
+		list.tail = nil
+	} else {
+		list.tail = list.tail.prev
+		list.tail.next = nil
+	}
+	list.size--
+}
 
-// to do
 func (list *DoubleLinkedList) RemoveOnIndex(index int) error {
-	return nil
+	if list.size == 0 {
+		return errors.New("list is empty")
+	}
+	if index <= list.size && index > -1 {
+		if list.size == 1 {
+			list.head = nil
+			list.tail = nil
+		} else if index == 0 {
+			list.head = list.head.next
+			list.head.prev = nil
+		} else if index == list.size {
+			list.tail = list.tail.prev
+			list.tail.next = nil
+		} else {
+			current := list.head
+
+			for i := 0; i < index; i++ {
+				current = current.next
+			}
+
+			current.next.prev = current.prev
+			current.prev.next = current.next
+		}
+
+		list.size--
+		return nil
+	} else {
+		return errors.New("index is not accessible")
+	}
 }
 
 // to do
