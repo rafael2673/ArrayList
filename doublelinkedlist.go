@@ -2,6 +2,7 @@ package list
 
 import (
 	"errors"
+	"fmt"
 )
 
 type NodeDoubleLinked struct {
@@ -126,6 +127,15 @@ func (list *DoubleLinkedList) Get(index int) (int, error) {
 	}
 	return -1, errors.New("index is not accessible")
 }
+func (list *DoubleLinkedList) GetAll() {
+	fmt.Println("Size: ", list.Size())
+	current := list.head
+	fmt.Println(current.value)
+	for i := 0; i < list.size-1; i++ {
+		current = current.next
+		fmt.Println(current.value)
+	}
+}
 
 func (list *DoubleLinkedList) Update(value int, index int) error {
 	if list.size == 0 {
@@ -144,4 +154,14 @@ func (list *DoubleLinkedList) Update(value int, index int) error {
 
 func (list *DoubleLinkedList) Size() int {
 	return list.size
+}
+
+func (list *DoubleLinkedList) Reverse() {
+	current := list.head
+	list.head, list.tail = list.tail, list.head
+
+	for current != nil {
+		current.prev, current.next = current.next, current.prev
+		current = current.prev
+	}
 }
