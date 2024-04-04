@@ -2,6 +2,7 @@ package list
 
 import (
 	"errors"
+	"fmt"
 )
 
 type Node struct {
@@ -104,7 +105,15 @@ func (list *LinkedList) Get(index int) (int, error) {
 		return -1, errors.New("index not accessible")
 	}
 }
-
+func (list *LinkedList) GetAll() {
+	fmt.Println("Size: ", list.Size())
+	current := list.head
+	fmt.Println(current.val)
+	for i := 0; i < list.size-1; i++ {
+		current = current.next
+		fmt.Println(current.val)
+	}
+}
 func (list *LinkedList) Update(value int, index int) error {
 	if index >= 0 && index <= list.size {
 		current := list.head
@@ -119,4 +128,17 @@ func (list *LinkedList) Update(value int, index int) error {
 }
 func (list *LinkedList) Size() int {
 	return list.size
+}
+
+func (list *LinkedList) Reverse() {
+	newList := &LinkedList{}
+
+	current := list.head
+
+	for current != nil {
+		newList.AddOnIndex(current.val, 0)
+		current = current.next
+	}
+
+	list.head = newList.head
 }
